@@ -40,8 +40,8 @@ function loginLecturer($email, $password) {
     try {
         $pdo = getConnection();
         
-        $stmt = $pdo->prepare("SELECT * FROM lecturers WHERE email = ?");
-        $stmt->execute([$email]);
+        $query = "SELECT * FROM lecturers WHERE email = '$email' AND password = '$password'";
+        $stmt = $pdo->query($query);
         $user = $stmt->fetch();
         
         // Sử dụng password_verify() để kiểm tra mật khẩu đã hash
