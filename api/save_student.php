@@ -16,6 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $dob = $_POST['dob'] ?? null;
     $class_name = trim($_POST['class_name'] ?? '');
+    $score1 = floatval($_POST['score1'] ?? 0);
+    $score2 = floatval($_POST['score2'] ?? 0);
+    $score3 = floatval($_POST['score3'] ?? 0);
+    $score = floatval($_POST['score'] ?? 0);
     $gpa = floatval($_POST['gpa'] ?? 0);
     
     // Validate
@@ -26,10 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($id) {
         // Cập nhật
-        $result = updateStudent($id, $student_code, $full_name, $email, $dob, $class_name, $gpa);
+        $result = updateStudent($id, $student_code, $full_name, $email, $dob, $class_name, $score1, $score2, $score3, $score, $gpa);
     } else {
         // Thêm mới
-        $result = createStudent($student_code, $full_name, $email, $dob, $class_name, $gpa);
+        $result = createStudent($student_code, $full_name, $email, $dob, $class_name, $score1, $score2, $score3, $score, $gpa);
     }
     
     echo json_encode($result);

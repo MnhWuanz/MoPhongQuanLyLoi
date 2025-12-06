@@ -57,6 +57,10 @@ $students = $result['students'];
                         <th>Ngày Sinh</th>
                         <th>Lớp</th>
                         <th>Email</th>
+                        <th>Kỳ 1</th>
+                        <th>Kỳ 2</th>
+                        <th>Kỳ 3</th>
+                        <th>ĐTB</th>
                         <th>GPA</th>
                         <th>Thao Tác</th>
                     </tr>
@@ -64,7 +68,7 @@ $students = $result['students'];
                 <tbody>
                     <?php if (empty($students)): ?>
                         <tr>
-                            <td colspan="8" style="text-align:center;padding:40px;color:#999;">
+                            <td colspan="12" style="text-align:center;padding:40px;color:#999;">
                                 Chưa có sinh viên. Hãy thêm sinh viên mới!
                             </td>
                         </tr>
@@ -77,6 +81,10 @@ $students = $result['students'];
                                 <td><?php echo $student['dob'] ? date('d/m/Y', strtotime($student['dob'])) : ''; ?></td>
                                 <td><?php echo htmlspecialchars($student['class_name'] ?? ''); ?></td>
                                 <td><?php echo htmlspecialchars($student['email']); ?></td>
+                                <td><?php echo number_format($student['score1'] ?? 0, 1); ?></td>
+                                <td><?php echo number_format($student['score2'] ?? 0, 1); ?></td>
+                                <td><?php echo number_format($student['score3'] ?? 0, 1); ?></td>
+                                <td><strong><?php echo number_format($student['score'] ?? 0, 2); ?></strong></td>
                                 <td><?php echo number_format($student['gpa'], 2); ?></td>
                                 <td class="actions">
                                     <button class="btn btn-edit" onclick='editStudent(<?php echo json_encode($student); ?>)'>✏️</button>
@@ -128,10 +136,42 @@ $students = $result['students'];
                         <label>Email <span class="required">*</span></label>
                         <input type="email" name="email" id="email" required>
                     </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📚 Điểm Kỳ 1 (0-10) <span class="required">*</span></label>
+                        <input type="number" name="score1" id="score1" min="0" max="10" step="0.1" required onkeyup="calculateGPA()" onchange="calculateGPA()">
+                    </div>
                     
                     <div class="form-group">
-                        <label>GPA (0-4)</label>
-                        <input type="number" name="gpa" id="gpa" min="0" max="4" step="0.01" value="0">
+                        <label>📚 Điểm Kỳ 2 (0-10) <span class="required">*</span></label>
+                        <input type="number" name="score2" id="score2" min="0" max="10" step="0.1" required onkeyup="calculateGPA()" onchange="calculateGPA()">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📚 Điểm Kỳ 3 (0-10) <span class="required">*</span></label>
+                        <input type="number" name="score3" id="score3" min="0" max="10" step="0.1" required onkeyup="calculateGPA()" onchange="calculateGPA()">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>📋 Điểm TB</label>
+                        <input type="number" name="score" id="score" readonly style="background:#f5f5f5;font-weight:600;" step="0.01">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>GPA (Thang 4)</label>
+                        <input type="number" name="gpa" id="gpa" min="0" max="4" step="0.01" value="0" readonly style="background:#f5f5f5;">
+                        <small style="color:#666;font-size:12px;margin-top:5px;display:block;">Tự động tính từ 3 điểm kỳ</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Xếp loại</label>
+                        <input type="text" id="rating" readonly style="background:#f5f5f5;font-weight:600;">
                     </div>
                 </div>
                 

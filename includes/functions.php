@@ -124,7 +124,7 @@ function getStudentById($id) {
 }
 
 // Thêm sinh viên
-function createStudent($student_code, $full_name, $email, $dob = null, $class_name = null, $gpa = 0) {
+function createStudent($student_code, $full_name, $email, $dob = null, $class_name = null, $score1 = 0, $score2 = 0, $score3 = 0, $score = 0, $gpa = 0) {
     try {
         $pdo = getConnection();
         
@@ -137,10 +137,10 @@ function createStudent($student_code, $full_name, $email, $dob = null, $class_na
         
         // Insert
         $stmt = $pdo->prepare("
-            INSERT INTO students (student_code, full_name, email, dob, class_name, gpa) 
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO students (student_code, full_name, email, dob, class_name, score1, score2, score3, score, gpa) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$student_code, $full_name, $email, $dob, $class_name, $gpa]);
+        $stmt->execute([$student_code, $full_name, $email, $dob, $class_name, $score1, $score2, $score3, $score, $gpa]);
         
         return [
             'success' => true, 
@@ -153,7 +153,7 @@ function createStudent($student_code, $full_name, $email, $dob = null, $class_na
 }
 
 // Cập nhật sinh viên
-function updateStudent($id, $student_code, $full_name, $email, $dob = null, $class_name = null, $gpa = 0) {
+function updateStudent($id, $student_code, $full_name, $email, $dob = null, $class_name = null, $score1 = 0, $score2 = 0, $score3 = 0, $score = 0, $gpa = 0) {
     try {
         $pdo = getConnection();
         
@@ -167,10 +167,10 @@ function updateStudent($id, $student_code, $full_name, $email, $dob = null, $cla
         // Update
         $stmt = $pdo->prepare("
             UPDATE students 
-            SET student_code = ?, full_name = ?, email = ?, dob = ?, class_name = ?, gpa = ?
+            SET student_code = ?, full_name = ?, email = ?, dob = ?, class_name = ?, score1 = ?, score2 = ?, score3 = ?, score = ?, gpa = ?
             WHERE id = ?
         ");
-        $stmt->execute([$student_code, $full_name, $email, $dob, $class_name, $gpa, $id]);
+        $stmt->execute([$student_code, $full_name, $email, $dob, $class_name, $score1, $score2, $score3, $score, $gpa, $id]);
         
         return ['success' => true, 'message' => 'Cập nhật thành công!'];
     } catch (Exception $e) {
