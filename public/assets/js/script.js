@@ -16,21 +16,28 @@ function closeModal() {
 function openEditModal(id) {
     fetch(`/students/${id}`)
         .then(response => response.json())
-        .then(student => {
+        .then(result => {
+            if (!result.success) {
+                throw new Error(result.message || 'Không thể tải dữ liệu');
+            }
+            
+            const student = result.student;
+            
             document.getElementById('modalTitle').textContent = 'Sửa Thông Tin Sinh Viên';
             document.getElementById('studentId').value = student.id;
-            document.getElementById('student_code').value = student.student_code;
-            document.getElementById('full_name').value = student.full_name;
-            document.getElementById('email').value = student.email;
+            document.getElementById('student_code').value = student.student_code || '';
+            document.getElementById('full_name').value = student.full_name || '';
+            document.getElementById('email').value = student.email || '';
             document.getElementById('dob').value = student.dob || '';
             document.getElementById('class_name').value = student.class_name || '';
-            document.getElementById('score1').value = student.score1 || 0;
-            document.getElementById('score2').value = student.score2 || 0;
-            document.getElementById('score3').value = student.score3 || 0;
+            document.getElementById('score1').value = student.score1 !== null ? student.score1 : 0;
+            document.getElementById('score2').value = student.score2 !== null ? student.score2 : 0;
+            document.getElementById('score3').value = student.score3 !== null ? student.score3 : 0;
             
             document.getElementById('studentModal').style.display = 'block';
         })
         .catch(error => {
+            console.error('Error loading student:', error);
             alert('Lỗi khi tải dữ liệu sinh viên: ' + error.message);
         });
 }
