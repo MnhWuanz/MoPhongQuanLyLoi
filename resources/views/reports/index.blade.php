@@ -536,12 +536,174 @@
         grid-template-columns: 1fr;
     }
     
+    .report-section {
+        padding: 20px;
+    }
+    
+    .report-section h2 {
+        font-size: 20px;
+    }
+    
     .trend-chart {
         flex-direction: column;
+        padding: 30px 15px;
+        gap: 20px;
+    }
+    
+    .trend-item {
+        padding: 20px 30px;
+        min-width: 120px;
     }
     
     .trend-arrow {
         transform: rotate(90deg);
+    }
+    
+    .grade-chart {
+        gap: 15px;
+    }
+    
+    .progress-bar {
+        height: 25px;
+    }
+    
+    .progress-fill {
+        font-size: 12px;
+        padding-right: 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-grid {
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 18px;
+        gap: 15px;
+    }
+    
+    .stat-icon {
+        font-size: 32px;
+    }
+    
+    .stat-content h3 {
+        font-size: 24px;
+    }
+    
+    .stat-content p {
+        font-size: 13px;
+    }
+    
+    .report-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .report-section h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .trend-item {
+        padding: 15px 20px;
+    }
+    
+    .trend-score {
+        font-size: 28px;
+    }
+    
+    .trend-arrow {
+        font-size: 28px;
+    }
+    
+    .grade-label {
+        font-size: 13px;
+    }
+    
+    .progress-bar {
+        height: 22px;
+    }
+    
+    .progress-fill {
+        font-size: 11px;
+    }
+    
+    .badge-success, .badge-info, .badge-warning, .badge-secondary, .badge-danger {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+    
+    table {
+        font-size: 12px;
+    }
+    
+    table th,
+    table td {
+        padding: 8px 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .report-section h2 {
+        font-size: 16px;
+        padding-bottom: 12px;
+    }
+    
+    .trend-chart {
+        padding: 20px 10px;
+    }
+    
+    .trend-item {
+        padding: 12px 15px;
+        min-width: 100px;
+    }
+    
+    .trend-label {
+        font-size: 12px;
+    }
+    
+    .trend-score {
+        font-size: 24px;
+    }
+    
+    .trend-arrow {
+        font-size: 24px;
+    }
+    
+    .trend-analysis {
+        padding: 15px;
+        font-size: 14px;
+    }
+}
+
+/* Landscape orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .report-section {
+        margin-bottom: 15px;
+    }
+}
+
+/* Print styles for reports */
+@media print {
+    .dashboard-header,
+    .btn {
+        display: none !important;
+    }
+    
+    .report-section {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    .trend-chart {
+        background: white;
+        border: 1px solid #ddd;
     }
 }
 </style>

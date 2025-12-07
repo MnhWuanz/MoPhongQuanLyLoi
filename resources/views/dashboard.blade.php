@@ -7,14 +7,17 @@
     <header class="dashboard-header">
         <div class="header-left">
             <h1>🎓 Quản Lý Sinh Viên</h1>
+            <span class="hide-mobile">Xin chào, <strong>{{ Auth::user()->full_name }}</strong></span>
         </div>
         <div class="header-right">
-            <span>Xin chào, <strong>{{ Auth::user()->full_name }}</strong></span>
+            <span class="show-mobile" style="width: 100%; text-align: center; margin-bottom: 10px;">
+                Xin chào, <strong>{{ Auth::user()->full_name }}</strong>
+            </span>
             <a href="{{ route('reports.index') }}" class="btn btn-success">📊 Báo Cáo</a>
-            <a href="{{ route('change-password') }}" class="btn btn-secondary">Đổi mật khẩu</a>
+            <a href="{{ route('change-password') }}" class="btn btn-secondary">🔐 Đổi MK</a>
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
-                <button type="submit" class="btn btn-danger">Đăng xuất</button>
+                <button type="submit" class="btn btn-danger">🚪 Thoát</button>
             </form>
         </div>
     </header>
@@ -35,46 +38,47 @@
         </div>
 
         <div class="table-container">
-            <table id="studentTable">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Mã SV</th>
-                        <th>Họ Tên</th>
-                        <th>Ngày Sinh</th>
-                        <th>Lớp</th>
-                        <th>Email</th>
-                        <th>Kỳ 1</th>
-                        <th>Kỳ 2</th>
-                        <th>Kỳ 3</th>
-                        <th>ĐTB</th>
-                        <th>GPA</th>
-                        <th>Thao Tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($students as $index => $student)
-                        @php
-                            $grade = (object) $student->getGradeClassification();
-                        @endphp
+            <div class="table-wrapper">
+                <table id="studentTable">
+                    <thead>
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $student->student_code }}</td>
-                            <td>{{ $student->full_name }}</td>
-                            <td>{{ $student->dob ? $student->dob->format('d/m/Y') : '' }}</td>
-                            <td>{{ $student->class_name }}</td>
-                            <td>{{ $student->email }}</td>
-                            <td>{{ number_format($student->score1, 2) }}</td>
-                            <td>{{ number_format($student->score2, 2) }}</td>
-                            <td>{{ number_format($student->score3, 2) }}</td>
-                            <td>{{ number_format($student->score, 2) }}</td>
-                            <td>
-                                <span class="grade-badge {{ $grade->class }}">
-                                    {{ number_format($student->gpa, 2) }} - {{ $grade->text }}
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn-edit" onclick="openEditModal({{ $student->id }})">✏️</button>
+                            <th>STT</th>
+                            <th>Mã SV</th>
+                            <th>Họ Tên</th>
+                            <th>Ngày Sinh</th>
+                            <th>Lớp</th>
+                            <th>Email</th>
+                            <th>Kỳ 1</th>
+                            <th>Kỳ 2</th>
+                            <th>Kỳ 3</th>
+                            <th>ĐTB</th>
+                            <th>GPA</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($students as $index => $student)
+                            @php
+                                $grade = (object) $student->getGradeClassification();
+                            @endphp
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td class="no-wrap">{{ $student->student_code }}</td>
+                                <td class="no-wrap">{{ $student->full_name }}</td>
+                                <td class="no-wrap">{{ $student->dob ? $student->dob->format('d/m/Y') : '' }}</td>
+                                <td>{{ $student->class_name }}</td>
+                                <td>{{ $student->email }}</td>
+                                <td>{{ number_format($student->score1, 2) }}</td>
+                                <td>{{ number_format($student->score2, 2) }}</td>
+                                <td>{{ number_format($student->score3, 2) }}</td>
+                                <td>{{ number_format($student->score, 2) }}</td>
+                                <td>
+                                    <span class="grade-badge {{ $grade->class }}">
+                                        {{ number_format($student->gpa, 2) }} - {{ $grade->text }}
+                                    </span>
+                                </td>
+                                <td class="no-wrap">
+                                    <button class="btn-edit" onclick="openEditModal({{ $student->id }})">✏️</button>
                                 <button class="btn-delete" onclick="deleteStudent({{ $student->id }})">🗑️</button>
                             </td>
                         </tr>
@@ -87,6 +91,7 @@
                     @endforelse
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>
